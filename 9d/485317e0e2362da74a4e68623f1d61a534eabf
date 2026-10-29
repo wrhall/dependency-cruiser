@@ -1,0 +1,27 @@
+src/extract/index.mjs
+  s_414640ebec6bb9::t_f03a2d8efd62be 110-140,172-181
+test/extract/__mocks__/complete/a.js
+  s_414640ebec6bb9::t_1a5c1960814c38 1-3
+test/extract/__mocks__/complete/b.js
+  s_414640ebec6bb9::t_e76db6f746e187 1-2
+test/extract/__mocks__/complete/index.js
+  s_414640ebec6bb9::t_867d5c3669bd35 1-4
+test/extract/index.complete.spec.mjs
+  s_414640ebec6bb9::t_1bbd3100123ca4 1-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "9d485317e0e2362da74a4e68623f1d61a534eabf",
+  "prompts": {},
+  "sessions": {
+    "s_414640ebec6bb9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "10dc359c-60eb-4613-aa1b-589c8cf4b33f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Will Hall <768915+wrhall@users.noreply.github.com>"
+    }
+  }
+}
