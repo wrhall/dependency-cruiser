@@ -58,7 +58,7 @@ export function getASTFromSource(pFileRecord, pTranspileOptions) {
  *
  * If parsing fails we fall back to acorn's 'loose' parser
  *
- * Subsequent calls for the same file name will return the result from a cache.
+ * Repeated calls for the most recently parsed file return the cached result.
  *
  * @param {string} pFileName - the name of the file to compile
  * @param {any} pTranspileOptions - options for the transpiler(s) - typically a tsconfig or a babel config
@@ -78,6 +78,10 @@ export function getASTCached(pFileName, pTranspileOptions) {
     },
     pTranspileOptions,
   );
+  // Extraction asks for a file's AST a few times in a row, but never comes
+  // back to an earlier file. Keeping only the latest AST keeps memory flat
+  // instead of holding every parsed file until the cruise ends.
+  CACHE.clear();
   CACHE.set(pFileName, lAST);
   return lAST;
 }
