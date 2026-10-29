@@ -1,0 +1,19 @@
+src/extract/index.mjs
+  s_f8b7f16a761f85::t_0149e2abe0df8b 111-113,120-122
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "f17d9e757a34caf95f9a14ff3d45737d29b1fc45",
+  "prompts": {},
+  "sessions": {
+    "s_f8b7f16a761f85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_f8b7f16a761f85",
+        "model": "unknown"
+      },
+      "human_author": "Will Hall <768915+wrhall@users.noreply.github.com>"
+    }
+  }
+}
