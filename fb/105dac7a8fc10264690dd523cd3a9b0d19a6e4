@@ -1,0 +1,25 @@
+src/extract/acorn/parse.mjs
+  s_414640ebec6bb9::t_70da46fc9aff5d 61,81-84
+src/extract/swc/parse.mjs
+  s_414640ebec6bb9::t_61f4f196f77e95 41-42,53-56
+src/extract/tsc/parse.mjs
+  s_414640ebec6bb9::t_79718733ed1463 39-40,59-62
+test/extract/parse-cache.spec.mjs
+  s_414640ebec6bb9::t_8d1ca7f4e9909a 1-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "fb105dac7a8fc10264690dd523cd3a9b0d19a6e4",
+  "prompts": {},
+  "sessions": {
+    "s_414640ebec6bb9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "10dc359c-60eb-4613-aa1b-589c8cf4b33f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Will Hall <768915+wrhall@users.noreply.github.com>"
+    }
+  }
+}
