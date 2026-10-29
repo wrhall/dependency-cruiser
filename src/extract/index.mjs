@@ -107,17 +107,37 @@ function toDependencyAsModule(pToListItem) {
   };
 }
 
-function complete(pModules, pModule) {
-  return pModules
-    .concat(pModule)
-    .concat(
-      pModule.dependencies
-        .filter(
-          ({ followable, resolved }) =>
-            !followable && !pModules.some(({ source }) => source === resolved),
-        )
-        .map(toDependencyAsModule),
-    );
+/**
+ * Returns the modules, each followed by a module for every dependency of it
+ * that wasn't followed (core modules, npm packages, unresolvable ones, ...),
+ * unless a module with that source came earlier in the list.
+ *
+ * Keeps the seen sources in a Set, so this stays linear in the number of
+ * modules. Searching the list itself instead makes it quadratic, which
+ * dominates the run time on code bases with 100k+ modules.
+ *
+ * @param {Partial<IModule>[]} pModules
+ * @returns {Partial<IModule>[]}
+ */
+function complete(pModules) {
+  const lReturnValue = [];
+  const lSeenSources = new Set();
+
+  for (const lModule of pModules) {
+    const lUnfollowedDependencies = lModule.dependencies
+      .filter(
+        ({ followable, resolved }) =>
+          !followable && !lSeenSources.has(resolved),
+      )
+      .map(toDependencyAsModule);
+
+    lReturnValue.push(lModule, ...lUnfollowedDependencies);
+    lSeenSources.add(lModule.source);
+    for (const { source } of lUnfollowedDependencies) {
+      lSeenSources.add(source);
+    }
+  }
+  return lReturnValue;
 }
 
 function removeExcludedDynamicDependencies(pModule, pExclude) {
@@ -149,16 +169,16 @@ export default function extract(
 ) {
   clearCaches();
 
-  const lReturnValue = extractFileDirectoryArray(
-    pFileDirectoryArray,
-    pCruiseOptions,
-    pResolveOptions,
-    pTranspileOptions,
-  )
-    .reduce(complete, [])
-    .map((pModule) =>
-      removeExcludedDynamicDependencies(pModule, pCruiseOptions.exclude),
-    );
+  const lReturnValue = complete(
+    extractFileDirectoryArray(
+      pFileDirectoryArray,
+      pCruiseOptions,
+      pResolveOptions,
+      pTranspileOptions,
+    ),
+  ).map((pModule) =>
+    removeExcludedDynamicDependencies(pModule, pCruiseOptions.exclude),
+  );
   pResolveOptions.fileSystem.purge();
   clearCaches();
   return lReturnValue;
