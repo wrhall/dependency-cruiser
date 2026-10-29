@@ -108,19 +108,18 @@ function toDependencyAsModule(pToListItem) {
 }
 
 /**
- * Returns the modules, each followed by a module for every dependency of it
- * that wasn't followed (core modules, npm packages, unresolvable ones, ...),
- * unless a module with that source came earlier in the list.
- *
- * Keeps the seen sources in a Set, so this stays linear in the number of
- * modules. Searching the list itself instead makes it quadratic, which
- * dominates the run time on code bases with 100k+ modules.
+ * Returns the input modules, inserting a module entry after each module for
+ * every unfollowed dependency (such as core modules, npm packages, or
+ * unresolvable imports) whose source has not appeared earlier in the list.
  *
  * @param {Partial<IModule>[]} pModules
  * @returns {Partial<IModule>[]}
  */
 function complete(pModules) {
   const lReturnValue = [];
+  // Tracking seen sources in a Set keeps this linear in the number of
+  // modules. Scanning the output list directly is quadratic and dominates
+  // the run time on code bases with 100k+ modules.
   const lSeenSources = new Set();
 
   for (const lModule of pModules) {
