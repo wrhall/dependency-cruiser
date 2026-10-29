@@ -1,0 +1,21 @@
+src/extract/index.mjs
+  s_414640ebec6bb9::t_b2863876364c57 111-113,126,133,135
+test/extract/index.complete.spec.mjs
+  s_414640ebec6bb9::t_9fed722fefe792 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "dd3eca28fa8bd0c91107aba3b05b486bb4ae88a2",
+  "prompts": {},
+  "sessions": {
+    "s_414640ebec6bb9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "10dc359c-60eb-4613-aa1b-589c8cf4b33f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Will Hall <768915+wrhall@users.noreply.github.com>"
+    }
+  }
+}
