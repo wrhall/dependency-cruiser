@@ -108,9 +108,9 @@ function toDependencyAsModule(pToListItem) {
 }
 
 /**
- * Returns the input modules, inserting a module entry after each module for
- * every unfollowed dependency (such as core modules, npm packages, or
- * unresolvable imports) whose source has not appeared earlier in the list.
+ * Completes the module list by inserting a module entry for each
+ * non-followable dependency (such as core modules, JSON, unresolvable imports,
+ * or `doNotFollow` matches) immediately after the first module that imports it.
  *
  * @param {Partial<IModule>[]} pModules
  * @returns {Partial<IModule>[]}
@@ -123,16 +123,16 @@ function complete(pModules) {
   const lSeenSources = new Set();
 
   for (const lModule of pModules) {
-    const lUnfollowedDependencies = lModule.dependencies
+    const lNonFollowableDependencies = lModule.dependencies
       .filter(
         ({ followable, resolved }) =>
           !followable && !lSeenSources.has(resolved),
       )
       .map(toDependencyAsModule);
 
-    lReturnValue.push(lModule, ...lUnfollowedDependencies);
+    lReturnValue.push(lModule, ...lNonFollowableDependencies);
     lSeenSources.add(lModule.source);
-    for (const { source } of lUnfollowedDependencies) {
+    for (const { source } of lNonFollowableDependencies) {
       lSeenSources.add(source);
     }
   }

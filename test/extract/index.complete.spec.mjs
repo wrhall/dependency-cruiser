@@ -4,7 +4,7 @@ import normalizeResolveOptions from "#main/resolve-options/normalize.mjs";
 import extract from "#extract/index.mjs";
 
 describe("[I] extract/index - complete", () => {
-  it("adds one module for each dependency that isn't followed, right after its first dependent", async () => {
+  it("includes each non-followable dependency once, immediately after the first module that imports it", async () => {
     const lOptions = normalizeCruiseOptions({});
     const lResolveOptions = await normalizeResolveOptions(
       {
