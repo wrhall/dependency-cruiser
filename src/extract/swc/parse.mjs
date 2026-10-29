@@ -38,8 +38,8 @@ function getOptionsFor(pFileName) {
 
 /**
  * Compiles the file identified by pFileName into an (swc)
- * AST and returns it. Subsequent calls for the same file name will
- * return the result from a cache
+ * AST and returns it. Repeated calls for the most recently parsed file
+ * return the cached result.
  *
  * @param {string} pFileName - the name of the file to compile
  * @returns {ModuleItem[]} - an (swc) AST
@@ -50,6 +50,10 @@ export function getASTCached(pFileName) {
   }
   /** @type {swcCore} */
   const lAST = swc.parseFileSync(pFileName, getOptionsFor(pFileName));
+  // Extraction asks for a file's AST a few times in a row, but never comes
+  // back to an earlier file. Keeping only the latest AST keeps memory flat
+  // instead of holding every parsed file until the cruise ends.
+  CACHE.clear();
   CACHE.set(pFileName, lAST);
   return lAST;
 }
